@@ -16,8 +16,6 @@ stock_maximo['CODIGO'] = stock_maximo['CODIGO'].astype(str)
 #print(stock_maximo.info())
 
 
-
-
 #conexión a la api 
 def RunApi(URL):
     api_url = URL
@@ -41,6 +39,7 @@ def RunApi(URL):
         print(f"Ocurrió un error: {str(e)}")
         return (f"Ocurrió un error: {str(e)}")
 
+#ETL dataframe cartera tecnicos y cruce con csv stock_maximos = tope
 def consulta(user_id):  
     api = 'https://app.sytex.io/api/materialstock/?staff='+str(user_id)+'&limit=100'
     ln = RunApi(api)
@@ -96,7 +95,7 @@ def consulta(user_id):
         print(f"error : {str(e)}"+ " al encontrar al usuario "+ str(user_id))
         return (f"error : {str(e)}"+ " al encontrar al usuario "+ str(user_id))
 
-
+#Encontrar codigo de usuario=tecnico para encontrar los datos de sus cartera en def consulta
 def FindUser(User):
     api = "https://app.sytex.io/api/staff/?q="+str(User)
     User = RunApi(api)

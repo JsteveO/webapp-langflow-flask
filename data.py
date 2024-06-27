@@ -12,7 +12,7 @@ headers = {
     }
 
 
-#conexión a la api 
+#conexión a la api y conversión de rebote de excel a dataframe
 def RunApi(URL):
     api_url = URL
     try:
@@ -36,7 +36,7 @@ def RunApi(URL):
         print(f"Ocurrió un error: {str(e)}")
         return (f"Ocurrió un error: {str(e)}")
 
-
+#ETL cartera bodega
 def suministros():  
     #api = 'https://app.sytex.io/api/stock_in_location/?location_id=467&location_type=185&default_warehouse=false'
     api = 'https://app.sytex.io/api/materialstocktotaldata?org_id=164&should_list_in_warehouse_stock=467&virtual_warehouse_stock=467'
