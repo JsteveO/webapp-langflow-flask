@@ -1,0 +1,89 @@
+<!doctype html>
+<head>
+    <title>EIA - Suministros</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='fav.ico') }}">
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+      }
+
+      .styled-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 25px 0;
+          font-size: 16px;
+          text-align: center;
+      }
+
+      .styled-table th, .styled-table td {
+          padding: 12px 15px;
+          border-bottom: 1px solid #ddd;
+      }
+
+      .styled-table th {
+          background-color: #f2f2f2;
+          color: #333;
+      }
+
+      .styled-table tbody tr:nth-of-type(even) {
+          background-color: #f9f9f9;
+      }
+
+      .styled-table tbody tr:hover {
+          background-color: #ececec;
+      }
+
+      .download-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #3498db;
+          color: white;
+          padding: 15px;
+          border-radius: 5px;
+          margin-top: 15px;
+      }
+  </style>
+</head>
+<html>
+   <body>
+     <main>
+        <div class="px-4 py-3 my-2 text-center">
+            <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/logo-eiasa-new.png') }}" alt="EIA Logo" width="179" height="71"/>
+            <!-- <img  src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+            <h1 class="display-6 fw-bold text-primary">Consulta de materiales</h1>            
+          </div>
+        
+        <form method="post" action="{{url_for('consulta')}}">
+            <div class="col-md-6 mx-auto text-center">
+                <label for="name" class="form-label fw-bold fs-5">Por favor inserte cédula del técnico:</label>
+
+                <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
+                    <input type="text" class="form-control" id="name" name="name" style="max-width: 256px;">
+                  </div>            
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
+                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">consultar</button>
+                </div>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
+                  <a href="/bodega" class="btn btn-secondary btn-lg px-4 gap-3">Stock Almacen</a>
+              </div>           
+            </div>
+        </form>
+        
+        <!-- Mostrar df_html si está definido -->
+        {% if consulta_result %}
+        <div class="container mt-4">
+          <h2 class="form-label fw-bold fs-5">Resultado de la consulta para {{ name }}: {{ user }}</h2>
+          <h2 class="form-label fw-bold fs-5">Equipos: {{ eq }}</h2>
+          <div class="styled-table">
+              {{ consulta_result | safe }}  <!-- Usa "safe" para renderizar HTML seguro -->
+          </div>
+        </div>
+        {% endif %}
+        
+     </main> 
+    
+   </body>
+</html>
