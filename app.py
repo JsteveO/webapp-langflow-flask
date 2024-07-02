@@ -14,8 +14,17 @@ app = Flask(__name__)
 @app.route('/')
 def index():
    print('Request for index page received')
-   return render_template('index.html')
+   return render_template('home.html')
+   
 
+# @app.route('/home', methods=['GET'])
+# def home():
+#    try:   
+#       return render_template('home.html')
+   
+   # except ValueError as e:
+   #          print(f'Error: {e} -- redirecting to /home')
+   #          return redirect(url_for('index'))
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -40,7 +49,7 @@ def consulta():
             styled_df = df.style.applymap(color_diff, subset=['diff'])
             html_table = styled_df.to_html()
 
-            return render_template('index.html', consulta_result=html_table, name=name, user=user_name, eq=eq)
+            return render_template('home.html', consulta_result=html_table, name=name, user=user_name, eq=eq)
          else:
             return '''<html lang="es">
                      <head>
