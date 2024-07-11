@@ -1,3 +1,5 @@
-pandas
-flask
-request
+Flask==2.2.2
+gunicorn
+Werkzeug==2.2.2
+python-dotenv
+langflow
