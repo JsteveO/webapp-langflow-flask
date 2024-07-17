@@ -1,16 +1,21 @@
-# Deploy a Python (Flask) web app to Azure App Service - Sample Application
+# Deploy a Python (Flask) web app wih Langflow to Azure App Service - Sample Application
 
-This is the sample Flask application for the Azure Quickstart [Deploy a Python (Django or Flask) web app to Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/quickstart-python). For instructions on how to create the Azure resources and deploy the application to Azure, refer to the Quickstart article.
-
+(https://docs.microsoft.com/en-us/azure/app-service/quickstart-python ). Para obtener instrucciones sobre cómo crear los recursos de Azure e implementar la aplicación en Azure, consulte el artículo de inicio rápido.
 Sample applications are available for the other frameworks here:
 
-* Django [https://github.com/Azure-Samples/msdocs-python-django-webapp-quickstart](https://github.com/Azure-Samples/msdocs-python-django-webapp-quickstart)
-* FastAPI [https://github.com/Azure-Samples/msdocs-python-fastapi-webapp-quickstart](https://github.com/Azure-Samples/msdocs-python-fastapi-webapp-quickstart)
+Preferiblemente usar:
+ --> python 3.12
+ 
+clonar este repositorio:
+--> git clone https://github.com/JsteveO/webapp-langflow-flask.git
 
-If you need an Azure account, you can [create one for free](https://azure.microsoft.com/en-us/free/).
+Preferiblemente utilizar un entorno virtual:
+1. crear entorno virtual
+--> python -m venv .venv / python3 -m venv .venv
+2. activar entorno virtual
+--> source .venv/bin/activate
 
 
-python 3.12
 
 pip install -r requirements
 
