@@ -1,0 +1,64 @@
+{% extends "home1.html" %}
+{% block content %}
+  <div class="container">
+    {% for category, items in productos.items() %}
+      <h3>{{ category }}</h3>
+      <div class="row">
+        {% for item in items %}
+          <div class="col-md-3">
+            <div class="card mb-4">
+              <img src="{{ url_for('static', filename='images/' ~ item.imagen) }}" class="card-img-top" alt="Imagen de {{ item.nombre }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.nombre }}</h5>
+                <button class="btn btn-info btn-sm" onclick="toggleSelectLists('{{ item.nombre }}')">
+                  Ver
+                </button>
+
+                <div id="select-lists-{{ item.nombre }}" class="select-lists" style="display: none;">
+                  {% if category == "Granizados" %}
+                    <select class="form-control" id="list1-{{ item.nombre}}" name="list1" style="margin-top: 10px;">
+                      <option value="" disabled selected>Tipo</option>
+                      <option value="alcohol">Alcohol</option>
+                      <option value="cremoso">Cremoso</option>
+                      <option value="juice">Juice</option>
+                    </select>
+
+                    <select class="form-control" id="list2-{{ item.nombre}}" name="list2" style="margin-top: 10px;">
+                      <option value="" disabled selected>Sabor</option>
+                    </select>
+
+                  {% elif category == "Micheladas" %}
+                    <select class="form-control" id="list1-{{ item.nombre}}" name="list1" style="margin-top: 10px;">
+                      <option value="" disabled selected>Tipo</option>
+                      <option value="aguila">Águila</option>
+                      <option value="corona">Corona</option>
+                      <option value="quatro">Quatro</option>
+                    </select>
+
+
+                  {% endif %}
+
+                  <form class="add-to-cart-form" method="POST" action="/carrito" style="margin-top: 10px;">
+                    <input type="hidden" id="category-{{ category }}" name="category" value="{{ category }}">
+                    <input type="hidden" id="producto-{{ item.nombre }}" name="producto" value="{{ item.nombre }}">
+                    <input type="hidden" id="precio-{{ item.nombre }}" name="precio" value="{{ item.precio }}">
+                    <div class="precio-vista" id="precio-vista-{{ item.nombre }}">Precio: -</div>
+                    <input type="hidden" name="cantidad" value="1">
+
+                    <!-- Inputs ocultos para tipo y sabor -->
+                    <input type="hidden" id="tipo-{{ item.nombre}}" name="tipo" value="">
+                    <input type="hidden" id="sabor-{{ item.nombre}}" name="sabor" value="">
+                  
+                        <button type="submit" class="btn btn-primary btn-sm add-to-cart-btn" name="agregar" value="true">
+                          Agregar
+                        </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

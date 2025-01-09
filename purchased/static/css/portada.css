@@ -1,0 +1,109 @@
+/* Fondo con imagen transparente */
+body {
+    background: url('../images/chair.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Aplicar transparencia solo a la imagen de fondo */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    opacity: 0.5; /* Ajusta la opacidad según prefieras */
+    z-index: -1;
+}
+
+/* Estilos para el título */
+#compra h4 {
+    background-color: darkred;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 24px;
+    flex: 1; /* Permite que el h4 tome el espacio disponible */
+    text-align: center; /* Centra el texto dentro del h4 */
+ /* Asegura que haya espacio a la izquierda para el pseudo-elemento */
+}
+
+#compra h4::before {
+    content: "505";
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute; /* Permite que se coloque en el lugar correcto */
+    left: 10px; /* Ajusta según sea necesario para que esté en la izquierda */
+}
+
+/* Estilos para las cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    flex: 1 1 200px; /* Tamaño mínimo de 200px por card */
+    max-width: 220px;
+    text-align: center;
+}
+
+/* Ajusta la imagen al ancho del contenedor de la tarjeta */
+.card-img-top {
+    width: 60%;
+    max-height: 200px; /* Limita la altura máxima de la imagen */
+    object-fit: cover; /* Ajusta la imagen para cubrir el área del contenedor */
+    margin: 0 auto; /* Centra la imagen */
+    display: block;
+}
+
+/* Estilos para los botones */
+.btn-pagar {
+    width: 50%;
+    margin: 10px auto;
+    display: block;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-pagar:hover {
+    background-color: #c0392b;
+}
+
+/* Centrar texto del footer y títulos de las cards */
+footer p, .card-title {
+    text-align: center;
+}
+
+/* Espaciado en el main */
+main {
+    padding: 20px;
+}
+

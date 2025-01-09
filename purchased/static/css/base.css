@@ -1,0 +1,14 @@
+/* base.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+
+.footer {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 10px;
+}
+
+

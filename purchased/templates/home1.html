@@ -1,0 +1,185 @@
+<!-- home1.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System 505</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Daze505.png') }}">
+
+    <!-- Archivos CSS personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-left.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-right.css') }}">
+</head>
+<body>
+
+    <!-- Sidebar Izquierdo -->
+    <nav class="sidebar-left">
+      <select class="form-control" id="empleado" name="empleado" style="width: 90%; margin-top: 10px">
+        <option value="" disabled selected>Selecciona un empleado</option>
+        <option value="saimon">Saimon</option>
+        <option value="stiven">Stiven</option>
+    </select>
+      <a class="navbar-brand" href="/home">
+        <img src="{{ url_for('static', filename='images/ov.png') }}" alt="ov Logo">
+      </a>
+
+      <!-- Formulario de búsqueda de cliente -->
+
+      <form method="POST" action="/cliente">
+        <input
+          type="text"
+          class="form-control"
+          id="celular"
+          name="celular"
+          placeholder="Celular"
+          value="{{ celular }}"
+          style="width: 90%; margin-top: 20px"
+        />
+        <button type="submit" class="btn btn-primary btn-lg px-4 py-1" style="margin-top: 10px;">
+          Consultar
+        </button>
+      </form>
+
+      <!-- Mostrar resultado de la búsqueda -->
+      {% if resultado %}
+        <div class="alert alert-info" style="margin-top: 20px;">
+            {{ resultado }}
+            {{ celu_prod }}
+        </div>
+      {% endif %}
+
+      <!-- Mostrar campos adicionales si el cliente no existe -->
+      {% if resultado == "No existe." %}
+      <form method="POST" action="/cliente" style="margin-top: 20px;">
+        <input
+          type="text"
+          class="form-control"
+          id="new_celular"
+          name="new_celular"
+          placeholder="Celular"
+          value="{{ celular }}"  
+          style="width: 90%; margin-top: 10px"
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="cliente"
+          name="cliente"
+          placeholder="Cliente"
+          style="width: 90%; margin-top: 10px"
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="direccion"
+          name="direccion"
+          placeholder="Dirección"
+          style="width: 90%; margin-top: 10px"
+        />
+        <button type="submit" class="btn btn-success btn-lg px-4 py-1" style="margin-top: 10px;" name="crear" value="true">
+          Crear
+        </button>
+      </form>
+      {% endif %}
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="footer">
+        <p>© 2024 St. Todos los derechos reservados.</p>
+      </footer>
+    </div>
+
+    <!-- Sidebar Derecho -->
+    <nav class="sidebar-right">
+      <h2>Pedidos</h2>
+
+      <!-- Aquí puedes agregar el contenido dinámico de los pedidos -->
+      <div class="total-label">
+        <span>Total:</span>
+        <span>$0.00</span>
+      </div>
+      <form method="POST" action="/pagar" id="pago-form" style="margin-top: 20px;" onsubmit="return validarFormulario();">
+        <select class="form-control" id="tipo_pago" name="tipo_pago" style="width: 70%; margin-top: 10px">
+            <option value="" disabled selected>Tipo de pago</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+            <option value="particion">Partición</option>
+        </select>
+        <select class="form-control" id="descuento" name="descuento" style="width: 70%; margin-top: 10px">
+          <option value="" disabled selected>Descuento</option>
+          <option value=0>0%</option>
+          <option value=1>10%</option>
+          <option value=2>20%</option>
+          <option value=3>30%</option>
+          <option value=4>40%</option>
+          <option value=5>50%</option>
+          <option value=6>60%</option>
+          <option value=7>70%</option>
+          <option value=8>80%</option>
+          <option value=9>90%</option>
+          <option value=10>100%</option>
+        </select>
+    
+        <input type="hidden" id="empleado_hidden" name="empleado" value="{{ empleado }}"> <!-- Agregar valor de empleado si es necesario -->
+        <input type="hidden" id="cliente_hidden" name="celular" value="{{ celu_prod }}">
+        {% for item in carrito %}
+            <input type="hidden" name="producto" value="{{ item.producto }}">
+            <input type="hidden" name="cantidad" value="{{ item.cantidad }}">
+            <input type="hidden" name="precio" value="{{ item.precio }}">
+        {% endfor %}
+        
+        <button type="submit" class="btn-pagar" style="margin-top: 10px;" name="pagar" value="true">
+            Pagar
+        </button>
+    </form>
+    </nav>
+
+    <!-- Bootstrap JS -->
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Scripts personalizados -->
+    <!-- Si usas un archivo main.js para gestionar los módulos -->
+    <script src="{{ url_for('static', filename='js/precios.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/selectors.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/formSubmit.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_ver.js') }}"></script>
+    <!-- Incluye el archivo script_ver.js justo antes de cerrar el bloque de contenido -->
+    
+
+    <script>
+      function validarFormulario() {
+          const tipoPago = document.getElementById('tipo_pago').value;
+          const descuento = document.getElementById('descuento').value;
+          const empleado = document.getElementById('empleado_hidden').value; // Asegúrate de que el ID sea correcto
+          const celular = document.getElementById('cliente_hidden').value;
+          const productos = document.querySelectorAll('input[name="producto"]');
+  
+          if (!tipoPago || !empleado || !celular || productos.length === 0) {
+              alert("Por favor, llena todos los campos requeridos.");
+              return false; // Detener el envío del formulario
+          }
+  
+          return true; // Permitir el envío del formulario
+      }
+  </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sendPedido = "{{ send_pedido }}";  // Pasamos la variable desde Flask
+            if (sendPedido) {
+                alert(sendPedido);  // Muestra el mensaje solo si el pedido fue enviado
+            }
+        });
+    </script>
+</body>
+</html>

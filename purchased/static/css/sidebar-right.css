@@ -1,0 +1,82 @@
+/* sidebar-right.css */
+.sidebar-right {
+    width: 300px;
+    background-color: #f39c12;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Cambiado a fixed */
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow-y: auto; /* Permite el scroll en el sidebar */
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f1c40f;
+    color: #000;
+    border-radius: 5px;
+}
+
+.cart-item .item-info {
+    flex: 1;
+}
+
+.cart-item .item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item .item-actions input {
+    width: 60px;
+    margin-right: 10px;
+}
+
+.cart-item .item-actions .remove-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.cart-item .item-actions .remove-btn:hover {
+    background-color: #c0392b;
+}
+
+.sidebar-right .list-group {
+    flex: 1;
+    overflow-y: auto; /* Permite el desplazamiento dentro del área de productos */
+}
+
+.total-label {
+    margin-top: auto; /* Asegura que el total esté al final del sidebar */
+    padding: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-pagar {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-pagar:hover {
+    background-color: #c0392b;
+}

@@ -1,0 +1,208 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System 505</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Daze505.png') }}">
+
+    <!-- Archivos CSS personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-left.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-right.css') }}">
+</head>
+<body>
+
+    <!-- Sidebar Izquierdo -->
+    <nav class="sidebar-left">
+      <div id="image-container" style="margin-left: 30px;">
+      <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='images/ov.png') }}" alt="Azure Logo">
+      <a class="navbar-brand" href="/*">
+        <img src="{{ url_for('static', filename='Daze505.png') }}" alt="Refresh Logo">
+      </a>
+    </div>
+
+      <a class="nav-link" href="javascript:void(0);" onclick="toggleSupplierForm()">Supplier</a>
+      <a class="nav-link" href="javascript:void(0);" onclick="toggleInventoryForm()">Inventory</a>
+      <a class="nav-link" href="javascript:void(0);" onclick="toggleIdCompraForm()">Supply</a>
+
+      <!-- Formulario de creación de proveedor -->
+
+      <form id="proveedor-form" method="POST" action="/registros" style="margin-top: 20px; display: none;" onsubmit="return validarForms('crear_proveedor');">
+        <input type="text" class="form-control" id="local_name" name="local_name" placeholder="Proveedor" style="width: 90%; margin-top: 10px"/>
+        <input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="Vendedor" style="width: 90%; margin-top: 10px" />
+        <input type="text" class="form-control" id="celular" name="celular" placeholder="Celular" style="width: 90%; margin-top: 10px"/>
+        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" style="width: 90%; margin-top: 10px"/>
+        
+        <button type="submit" class="btn btn-success btn-lg px-4 py-1" style="margin-top: 10px;" name="crear_proveedor" value="true">
+          Crear
+        </button>
+      </form>
+          <!-- Formulario de creación de suministro -->
+
+          <form id="suministro-form" method="POST" action="/registros" style="margin-top: 20px; display: none;" onsubmit="return validarForms('crear_suministro');">
+            <input type="text" class="form-control" id="product" name="product" placeholder="Producto" style="width: 90%; margin-top: 10px"/>
+            <input type="text" class="form-control" id="type" name="type" placeholder="Tipo" style="width: 90%; margin-top: 10px" />
+            <input type="text" class="form-control" id="medida" name="medida" placeholder="Medida" style="width: 90%; margin-top: 10px"/>
+            <input type="text" class="form-control" id="ud_medida" name="ud_medida" placeholder="Unidad Medida" style="width: 90%; margin-top: 10px"/>
+
+            <button type="submit" class="btn btn-success btn-lg px-4 py-1" style="margin-top: 10px;" name="crear_suministro" value="true">
+              Crear
+            </button>
+          </form>
+
+          <!-- Formulario de creación de factura -->
+
+          <form id="id_compra-form" method="POST" action="/registros" style="margin-top: 20px; display: none;" onsubmit="return validarForms('crear_compra');">
+            <input type="text" class="form-control" id="factura" name="factura" placeholder="Factura" style="width: 90%; margin-top: 10px; margin-bottom: 10px;"/>
+            <select class="form-control" id="id_supplier" name="id_supplier" style="width: 90%; margin-top: 10px;">
+              <option value="" disabled selected>PROVEEDOR</option>
+              {% for prov in provs %}
+                <option value="{{ prov }}">{{ prov }}</option>
+              {% endfor %}
+            </select>
+
+
+            <button type="submit" class="btn btn-success btn-lg px-4 py-1" style="margin-top: 10px;" name="crear_compra" value="true">
+              Crear
+            </button>
+          </form>
+          
+          {% if resultado %}
+          <div class="alert alert-info" style="margin-top: 20px;">
+              {{ resultado }}
+          </div>
+        {% endif %}
+    </nav>
+
+    <div class="main-content">
+      <form id="id_detalle-form" method="POST" action="/registros" style="margin-top: 20px;">
+      <!-- Sección de Compras y Proveedores -->
+      <div id="compra" style="margin-bottom: 20px;">
+        <h4>Insertar Compras</h4>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <!-- Select para Factura -->
+          <div style="flex-grow: 1;">
+            <label for="id_compra">Factura</label>
+            <select class="form-control" id="id_compra" name="id_compra" style="width: 50%;">
+              <option value="" disabled selected>FACTURA</option>
+              {% for compra in compras %}
+                <option value="{{ compra }}">{{ compra }}</option>
+              {% endfor %}
+            </select>
+          </div>    
+        </div>
+      </div>
+    
+      <!-- Sección de Detalle de Compra (Suministro, Cantidad, Precio) -->
+      <div id="detalle_compra">
+        <h4>Detalle de la Compra</h4>
+        <div id="detalle-compra-container">
+          <div class="detalle-compra-row" style="display: flex; gap: 10px; margin-top: 10px;">
+            <!-- Select para Suministro -->
+            <div style="flex-grow: 1;">
+              <label for="suministro_pro">Suministro</label>
+              <select class="form-control" id="suministro_pro" name="suministro_pro" style="width: 100%;">
+                <option value="" disabled selected>SUMINISTRO</option>
+                {% for sumin in sumins %}
+                  <option value="{{ sumin }}">{{ sumin }}</option>
+                {% endfor %}
+              </select>
+            </div>
+    
+            <!-- Input para Cantidad -->
+            <div style="flex-grow: 1;">
+              <label for="quantity">Cantidad</label>
+              <input type="text" id="quantity" name="quantity" class="form-control" style="width: 100%;" placeholder="Cantidad">
+            </div>
+    
+            <!-- Input para Precio -->
+            <div style="flex-grow: 1;">
+              <label for="price">Precio</label>
+              <input type="text" id="price_c" name="price_c" class="form-control" style="width: 100%;" placeholder="Precio">
+            </div>
+          </div>
+        </div>
+    
+        <!-- Botón para agregar más detalles de compra -->
+        <div id="image-container">
+          <button type="button" id="add-detail-btn" class="btn btn-secondary" style="width: 30%; display: inline-block;">Añadir más detalles</button>
+          <button type="button" id="del-detail-btn" class="btn btn-secondary" style="width: 30%; display: inline-block;">Quitar detalles</button>
+        </div>
+      </div>
+      <main>
+        {% block content1 %}{% endblock %}
+      </main>
+      <main>
+        {% block content2 %}{% endblock %}
+      </main>
+      <!-- Botón para Crear Compra -->
+      <button type="submit" class="btn-pagar" style="margin-top: 20px;" name="crear_detalle" value="true">
+        Crear
+      </button>
+    </form>
+      <footer class="footer" style="margin-top: 20px;">
+        <p>© 2024 St. Todos los derechos reservados.</p>
+      </footer>
+    
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_ver.js') }}"></script>
+
+</body>
+</html>
+
+<script>
+  function validarForms(formType) {
+    if (formType === 'crear_proveedor') {
+      const local_name = document.getElementById('local_name').value;
+      const contact_name = document.getElementById('contact_name').value;
+      const celular = document.getElementById('celular').value;
+      const direccion = document.getElementById('direccion').value;
+
+      if (!local_name || !contact_name || !celular || !direccion) {
+        alert("Por favor, llena todos los campos requeridos para el proveedor.");
+        return false; // Detener el envío del formulario
+      }
+
+      return true; // Permitir el envío del formulario
+    }
+
+    if (formType === 'crear_suministro') {
+      const product = document.getElementById('product').value;
+      const type = document.getElementById('type').value;
+      const medida = document.getElementById('medida').value;
+      const ud_medida = document.getElementById('ud_medida').value;
+
+      if (!product || !type || !medida || !ud_medida) {
+        alert("Por favor, llena todos los campos requeridos para el suministro.");
+        return false; // Detener el envío del formulario
+      }
+
+      return true; // Permitir el envío del formulario
+    }
+
+    if (formType === 'crear_compra') {
+      const factura = document.getElementById('factura').value;
+      const id_supplier = document.getElementById('id_supplier').value;
+
+      if (!factura || !id_supplier) {
+        alert("Por favor, llena todos los campos requeridos para la compra.");
+        return false; // Detener el envío del formulario
+      }
+
+      return true; // Permitir el envío del formulario
+    }
+
+    return false; // Por si el formType no coincide con ninguno
+  }
+</script>

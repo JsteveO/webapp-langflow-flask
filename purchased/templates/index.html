@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System 505</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Daze505.png') }}">
+
+        <!-- Archivos CSS personalizados -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/portada.css') }}">
+
+
+</head>
+<body>
+    <div class="main-content">
+        <!-- Sección de Compras y Proveedores con nuevo estilo de título -->
+        <div id="compra" style="margin-bottom: 20px;">
+          <h4> 505 - System</h4>
+        </div>
+
+          <main>
+            {% block content1 %}{% endblock %}
+          </main>
+
+      <div id="detalle-compra-container" class="card-container">
+        <!-- Contenedor de Cards -->
+         <!-- Contenedor de carrito -->
+        <form id="id_detalle-form" method="GET" action="/home" style="margin-top: 20px;">
+
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_Carrito" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Carrito</h5>
+              <button type="submit" class="btn-pagar" name="ir_Carrito" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+        
+        <!-- Contenedor de pedidos / productos -->
+        <form id="id_detalle-form" method="GET" action="/pedidos" style="margin-top: 20px;">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_pedidos" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">(Productos)</h5>
+              <button type="submit" class="btn-pagar" name="ir_pedidos" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Contenedor de registro de compras / relacion prodcutos_suministros -->
+        <form id="id_detalle-form" method="GET" action="/compras" style="margin-top: 20px;">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_inventario" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">(Inventario)</h5>
+              <button type="submit" class="btn-pagar" name="ir_inventario" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Contenedor de pagos ó salidas de efectivo -->
+        <form id="id_detalle-form" method="GET" action="/pagos" style="margin-top: 20px;">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_pagos" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Pagos</h5>
+              <button type="submit" class="btn-pagar" name="ir_inventario" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <form id="id_detalle-form" method="GET" action="/salidas" style="margin-top: 20px;">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_salidas" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Ajustes</h5>
+              <button type="submit" class="btn-pagar" name="ir_salidas" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <form id="id_detalle-form" method="GET" action="/*" style="margin-top: 20px;">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/ov.png') }}" alt="imagen_compras" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Compras</h5>
+              <button type="submit" class="btn-pagar" name="ir_compras" value="true">
+                Ir
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+
+
+      <main>
+        {% block content2 %}{% endblock %}
+      </main>
+      <main>
+        {% block content3 %}{% endblock %}
+      </main>
+
+
+      <footer class="footer" style="margin-top: 20px;">
+        <p>© 2024 St. Todos los derechos reservados.</p>
+      </footer>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

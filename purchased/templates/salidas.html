@@ -1,0 +1,100 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System 505</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Daze505.png') }}">
+
+    <!-- Archivos CSS personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-left.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-right.css') }}">
+</head>
+<body>
+
+    <!-- Sidebar Izquierdo -->
+    <nav class="sidebar-left">
+      <div id="image-container" style="margin-left: 30px;">
+      <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='images/ov.png') }}" alt="Azure Logo">
+      <a class="navbar-brand" href="/salidas">
+        <img src="{{ url_for('static', filename='Daze505.png') }}" alt="Refresh Logo">
+      </a>
+    </div>
+        {% if resultado %}
+          <div class="alert alert-info" style="margin-top: 20px;">
+              {{ resultado }}
+          </div>
+        {% endif %}
+ 
+    </nav>
+
+    <div class="main-content">
+      <form id="id_detalle-form" method="POST" action="/inv_salidas" style="margin-top: 20px;">
+    
+      <!-- Sección de Detalle de salidas (Suministro, Cantidad) -->
+      <div id="detalle_compra">
+        <h4>Detalle de la Salida</h4>
+        <div id="detalle-compra-container">
+          <div class="detalle-compra-row" style="display: flex; gap: 10px; margin-top: 10px;">
+            <!-- Select para Suministro -->
+            <div style="flex-grow: 1;">
+              <label for="suministro_pro">Suministro</label>
+              <select class="form-control" id="suministro_pro" name="inventario_pro" style="width: 100%;">
+                <option value="" disabled selected>SUMINISTRO</option>
+                {% for sumin in sumins %}
+                  <option value="{{ sumin }}">{{ sumin }}</option>
+                {% endfor %}
+              </select>
+            </div>
+    
+            <!-- Input para Cantidad -->
+            <div style="flex-grow: 1;">
+              <label for="quantity">Cantidad</label>
+              <input type="text" id="quantity" name="quantity_inv" class="form-control" style="width: 100%;" placeholder="Cantidad">
+            </div>
+    
+            <!-- Input para Precio -->
+
+          </div>
+        </div>
+    
+        <!-- Botón para agregar más detalles de compra -->
+        <div id="image-container">
+          <button type="button" id="add-detail-btn" class="btn btn-secondary" style="width: 30%; display: inline-block;">Añadir más detalles</button>
+          <button type="button" id="del-detail-btn" class="btn btn-secondary" style="width: 30%; display: inline-block;">Quitar detalles</button>
+        </div>
+      </div>
+      <main>
+        {% block content1 %}{% endblock %}
+      </main>
+      <main>
+        {% block content2 %}{% endblock %}
+      </main>
+      <!-- Botón para Crear Compra -->
+      <button type="submit" class="btn-pagar" style="margin-top: 20px;" name="crear_salida" value="true">
+        Crear
+      </button>
+    </form>
+      <footer class="footer" style="margin-top: 20px;">
+        <p>© 2024 St. Todos los derechos reservados.</p>
+      </footer>
+    
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_ver.js') }}"></script>
+
+</body>
+</html>
+
+
+
